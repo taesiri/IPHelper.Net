@@ -44,7 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="ManagedFuncs.cs" />
+    <Compile Include="TcpRow.cs" />
+    <Compile Include="TcpTable.cs" />
+    <Compile Include="UdpRow.cs" />
+    <Compile Include="UdpTable.cs" />
+    <Compile Include="Win32Funcs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
