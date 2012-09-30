@@ -93,6 +93,46 @@ namespace IPHelper
             return new UdpTable(udpRows);
         }
 
+
+        public static IPNetTable GetIpNetTable(bool sorted)
+        {
+            var ipNetRows = new List<IPNetRow>();
+
+            var ipNetTable = IntPtr.Zero;
+            var ipNetTableLength = 0;
+
+            if (Win32Funcs.GetIpNetTable(ipNetTable, ref ipNetTableLength, sorted) != 0)
+            {
+                try
+                {
+                    ipNetTable = Marshal.AllocCoTaskMem(ipNetTableLength);
+
+                    if (Win32Funcs.GetIpNetTable(ipNetTable, ref ipNetTableLength, sorted) == 0)
+                    {
+                        var table =
+                            (Win32Funcs.IpNetTable)Marshal.PtrToStructure(ipNetTable, typeof(Win32Funcs.IpNetTable));
+
+                        var rowPtr = (IntPtr)((long)ipNetTable + Marshal.SizeOf(table.Length));
+                        for (var i = 0; i < table.Length; i++)
+                        {
+                            ipNetRows.Add(
+                                new IPNetRow(
+                                    (Win32Funcs.IpNetRow)Marshal.PtrToStructure(rowPtr, typeof(Win32Funcs.IpNetRow))));
+
+                            rowPtr = (IntPtr)((long)rowPtr + Marshal.SizeOf(typeof(Win32Funcs.IpNetRow)));
+                        }
+                    }
+                }
+                finally
+                {
+                    if (ipNetTable != IntPtr.Zero)
+                    {
+                        Marshal.FreeHGlobal(ipNetTable);
+                    }
+                }
+            }
+            return new IPNetTable(ipNetRows);
+        }
         #endregion
     }
 }

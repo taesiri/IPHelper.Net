@@ -30,9 +30,28 @@ namespace IPHelper
         public static extern uint GetExtendedUdpTable(IntPtr udpTable, ref int udpTableLength, bool sort, int ipVersion,
                                                       UdpTableType udpTableType, int reserved);
 
+        /// <summary>
+        /// <see cref="http://msdn.microsoft.com/en-us/library/windows/desktop/aa365956%28v=vs.85%29.aspx"/>
+        /// </summary>
+        [DllImport(DllName, SetLastError = true)]
+        public static extern uint GetIpNetTable(IntPtr ipNetTable, ref int ipNetTableLength, bool sort);
+
         #endregion
 
         #region Public Enums
+
+        #region ArpEntryType enum
+
+        public enum ArpEntryType
+        {
+            UNKNOWN,
+            Other,
+            Invalid,
+            Dynamic,
+            Static
+        }
+
+        #endregion
 
         #region TcpTableType enum
 
@@ -71,6 +90,46 @@ namespace IPHelper
         #endregion
 
         #region Public Structs
+
+        #region Nested type: IpNetRow
+
+        /// <summary>
+        /// <see cref="http://msdn.microsoft.com/en-us/library/windows/desktop/aa366869%28v=vs.85%29.aspx"/>
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct IpNetRow
+        {
+            public int adaptorIndex;
+            public int adaptorPhysicalMacAddressLen;
+            public byte adaptorPhysicalMacAddress0;
+            public byte adaptorPhysicalMacAddress1;
+            public byte adaptorPhysicalMacAddress2;
+            public byte adaptorPhysicalMacAddress3;
+            public byte adaptorPhysicalMacAddress4;
+            public byte adaptorPhysicalMacAddress5;
+            public byte adaptorPhysicalMacAddress6;
+            public byte adaptorPhysicalMacAddress7;
+            public int adaptorAddr;
+
+            public int typeOfARPEntry;
+                       // 1 : other. 2:An invalid ARP type. This can indicate an unreachable or incomplete ARP entry. 3:A dynamic ARP type. 4:A static ARP type.
+        }
+
+        #endregion
+
+        #region Nested type: IpNetTable
+
+        /// <summary>
+        /// <see cref="http://msdn.microsoft.com/en-us/library/windows/desktop/aa366870%28v=vs.85%29.aspx"/>
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct IpNetTable
+        {
+            public uint Length;
+            public IpNetRow row;
+        }
+
+        #endregion
 
         #region Nested type: TcpRow
 

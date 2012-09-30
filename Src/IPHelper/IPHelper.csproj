@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IPNetRow.cs" />
+    <Compile Include="IPNetTable.cs" />
     <Compile Include="ManagedFuncs.cs" />
     <Compile Include="TcpRow.cs" />
     <Compile Include="TcpTable.cs" />
