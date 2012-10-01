@@ -1,1 +1,1 @@
-Directory for Samples
+Directory for Samples Projects using IPHelper.Net

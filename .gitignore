@@ -3,6 +3,7 @@ bin
 obj
 Binaries
 _ReSharper.IPHelper
+_ReSharper.Samples
 
 # mstest test results
 TestResults

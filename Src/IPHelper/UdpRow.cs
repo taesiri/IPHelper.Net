@@ -37,5 +37,38 @@ namespace IPHelper
         {
             get { return _processId; }
         }
+
+
+        public override string ToString()
+        {
+            var returnData = "ProcessId : " + ProcessId +
+                             " " + "Local Address : " + _localEndPoint.ToString();
+            return returnData;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+            try
+            {
+                var newObject = obj as TcpRow;
+                if (newObject == null)
+                    return false;
+                if (newObject.GetHashCode() == GetHashCode())
+                    return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            var dummy = this.ToString();
+            return dummy.GetHashCode();
+        }
     }
 }
