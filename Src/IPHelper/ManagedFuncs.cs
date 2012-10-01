@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Runtime.InteropServices;
-using IPHelper;
 
 namespace IPHelper
 {
@@ -9,12 +9,24 @@ namespace IPHelper
     {
         #region Public Methods
 
+        public static UInt32 AddIPAddress(IPAddress ipAddress, IPAddress ipAddressMask, int adaptorIndex)
+        {
+            // Note :: This Function has not been tested yet !
+            IntPtr ptrNTEContext;
+            IntPtr ptrNTEInstance;
+
+            uint result = Win32Funcs.AddIPAddress((uint) ipAddress.Address, (uint) ipAddressMask.Address,
+                                                  adaptorIndex, out ptrNTEContext, out ptrNTEInstance);
+
+            return result;
+        }
+
         public static TcpTable GetExtendedTcpTable(bool sorted)
         {
             var tcpRows = new List<TcpRow>();
 
-            var tcpTable = IntPtr.Zero;
-            var tcpTableLength = 0;
+            IntPtr tcpTable = IntPtr.Zero;
+            int tcpTableLength = 0;
 
             if (Win32Funcs.GetExtendedTcpTable(tcpTable, ref tcpTableLength, sorted, Win32Funcs.AfInet,
                                                Win32Funcs.TcpTableType.OwnerPidAll, 0) != 0)
@@ -26,10 +38,10 @@ namespace IPHelper
                         Win32Funcs.GetExtendedTcpTable(tcpTable, ref tcpTableLength, true, Win32Funcs.AfInet,
                                                        Win32Funcs.TcpTableType.OwnerPidAll, 0) == 0)
                     {
-                        var table =(Win32Funcs.TcpTable) Marshal.PtrToStructure(tcpTable, typeof (Win32Funcs.TcpTable));
+                        var table = (Win32Funcs.TcpTable) Marshal.PtrToStructure(tcpTable, typeof (Win32Funcs.TcpTable));
 
                         var rowPtr = (IntPtr) ((long) tcpTable + Marshal.SizeOf(table.Length));
-                        for (var i = 0; i < table.Length; ++i)
+                        for (int i = 0; i < table.Length; ++i)
                         {
                             tcpRows.Add(
                                 new TcpRow(
@@ -55,8 +67,8 @@ namespace IPHelper
         {
             var udpRows = new List<UdpRow>();
 
-            var udpTable = IntPtr.Zero;
-            var udpTableLength = 0;
+            IntPtr udpTable = IntPtr.Zero;
+            int udpTableLength = 0;
 
             if (
                 Win32Funcs.GetExtendedUdpTable(udpTable, ref udpTableLength, sorted, Win32Funcs.AfInet,
@@ -72,7 +84,7 @@ namespace IPHelper
                         var table = (Win32Funcs.UdpTable) Marshal.PtrToStructure(udpTable, typeof (Win32Funcs.UdpTable));
 
                         var rowPtr = (IntPtr) ((long) udpTable + Marshal.SizeOf(table.Length));
-                        for (var i = 0; i < table.Length; ++i)
+                        for (int i = 0; i < table.Length; ++i)
                         {
                             udpRows.Add(
                                 new UdpRow(
@@ -98,8 +110,8 @@ namespace IPHelper
         {
             var ipNetRows = new List<IPNetRow>();
 
-            var ipNetTable = IntPtr.Zero;
-            var ipNetTableLength = 0;
+            IntPtr ipNetTable = IntPtr.Zero;
+            int ipNetTableLength = 0;
 
             if (Win32Funcs.GetIpNetTable(ipNetTable, ref ipNetTableLength, sorted) != 0)
             {
@@ -110,16 +122,16 @@ namespace IPHelper
                     if (Win32Funcs.GetIpNetTable(ipNetTable, ref ipNetTableLength, sorted) == 0)
                     {
                         var table =
-                            (Win32Funcs.IpNetTable)Marshal.PtrToStructure(ipNetTable, typeof(Win32Funcs.IpNetTable));
+                            (Win32Funcs.IpNetTable) Marshal.PtrToStructure(ipNetTable, typeof (Win32Funcs.IpNetTable));
 
-                        var rowPtr = (IntPtr)((long)ipNetTable + Marshal.SizeOf(table.Length));
-                        for (var i = 0; i < table.Length; i++)
+                        var rowPtr = (IntPtr) ((long) ipNetTable + Marshal.SizeOf(table.Length));
+                        for (int i = 0; i < table.Length; i++)
                         {
                             ipNetRows.Add(
                                 new IPNetRow(
-                                    (Win32Funcs.IpNetRow)Marshal.PtrToStructure(rowPtr, typeof(Win32Funcs.IpNetRow))));
+                                    (Win32Funcs.IpNetRow) Marshal.PtrToStructure(rowPtr, typeof (Win32Funcs.IpNetRow))));
 
-                            rowPtr = (IntPtr)((long)rowPtr + Marshal.SizeOf(typeof(Win32Funcs.IpNetRow)));
+                            rowPtr = (IntPtr) ((long) rowPtr + Marshal.SizeOf(typeof (Win32Funcs.IpNetRow)));
                         }
                     }
                 }
@@ -133,6 +145,7 @@ namespace IPHelper
             }
             return new IPNetTable(ipNetRows);
         }
+
         #endregion
     }
 }

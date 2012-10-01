@@ -16,6 +16,13 @@ namespace IPHelper
         #region Public Methods
 
         /// <summary>
+        /// <see cref="http://msdn.microsoft.com/en-us/library/windows/desktop/aa365801%28v=vs.85%29.aspx"/>
+        /// </summary>
+        [DllImport(DllName, SetLastError = true)]
+        public static extern uint AddIPAddress(uint address, uint ipMask, int ifIndex, out IntPtr nteContext, out IntPtr nteInstance);
+
+
+        /// <summary>
         /// <see cref="http://msdn2.microsoft.com/en-us/library/aa365928.aspx"/>
         /// </summary>
         [DllImport(DllName, SetLastError = true)]
@@ -35,6 +42,7 @@ namespace IPHelper
         /// </summary>
         [DllImport(DllName, SetLastError = true)]
         public static extern uint GetIpNetTable(IntPtr ipNetTable, ref int ipNetTableLength, bool sort);
+       
 
         #endregion
 
