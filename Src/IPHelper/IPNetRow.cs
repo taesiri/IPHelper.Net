@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Text;
 
 namespace IPHelper
 {
@@ -15,7 +12,7 @@ namespace IPHelper
         private readonly PhysicalAddress _entryMacAddress;
         private readonly IPAddress _entryIPAddress;
         private readonly Win32Funcs.ArpEntryType _typeOfArp;
-
+        private readonly Win32Funcs.IpNetRow _orginalData;
         #endregion
 
         #region Constructors
@@ -23,7 +20,7 @@ namespace IPHelper
         public IPNetRow(Win32Funcs.IpNetRow ipNetRow)
         {
             // Todo : I Know what i have to do here! :D ;)
-
+            _orginalData = ipNetRow;
             _adaptorIndex = (int)ipNetRow.adaptorIndex;
             var macaddress = new byte[8]
                                  {
@@ -61,7 +58,10 @@ namespace IPHelper
             get { return _typeOfArp; }
         }
 
-
+        public Win32Funcs.IpNetRow GetIpNetRowStructure()
+        {
+            return _orginalData;
+        }
         #endregion
     }
 }

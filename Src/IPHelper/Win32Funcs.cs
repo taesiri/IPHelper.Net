@@ -42,8 +42,13 @@ namespace IPHelper
         /// </summary>
         [DllImport(DllName, SetLastError = true)]
         public static extern uint GetIpNetTable(IntPtr ipNetTable, ref int ipNetTableLength, bool sort);
-       
 
+        /// <summary>
+        /// <see cref="http://msdn.microsoft.com/en-us/library/windows/desktop/aa365866%28v=vs.85%29.aspx"/>
+        /// </summary>
+        [DllImport(DllName, SetLastError = true)]
+        public static extern uint CreateIpNetEntry(IntPtr ipNetRow);
+       
         #endregion
 
         #region Public Enums
@@ -107,20 +112,20 @@ namespace IPHelper
         [StructLayout(LayoutKind.Sequential)]
         public struct IpNetRow
         {
-            public int adaptorIndex;
-            public int adaptorPhysicalMacAddressLen;
-            public byte adaptorPhysicalMacAddress0;
-            public byte adaptorPhysicalMacAddress1;
-            public byte adaptorPhysicalMacAddress2;
-            public byte adaptorPhysicalMacAddress3;
-            public byte adaptorPhysicalMacAddress4;
-            public byte adaptorPhysicalMacAddress5;
-            public byte adaptorPhysicalMacAddress6;
-            public byte adaptorPhysicalMacAddress7;
-            public int adaptorAddr;
+            [MarshalAs(UnmanagedType.U4)] public int adaptorIndex;
+            [MarshalAs(UnmanagedType.U4)] public int adaptorPhysicalMacAddressLen;
+            [MarshalAs(UnmanagedType.U1)] public byte adaptorPhysicalMacAddress0;
+            [MarshalAs(UnmanagedType.U1)] public byte adaptorPhysicalMacAddress1;
+            [MarshalAs(UnmanagedType.U1)] public byte adaptorPhysicalMacAddress2;
+            [MarshalAs(UnmanagedType.U1)] public byte adaptorPhysicalMacAddress3;
+            [MarshalAs(UnmanagedType.U1)] public byte adaptorPhysicalMacAddress4;
+            [MarshalAs(UnmanagedType.U1)] public byte adaptorPhysicalMacAddress5;
+            [MarshalAs(UnmanagedType.U1)] public byte adaptorPhysicalMacAddress6;
+            [MarshalAs(UnmanagedType.U1)] public byte adaptorPhysicalMacAddress7;
+            [MarshalAs(UnmanagedType.U4)] public int adaptorAddr;
 
-            public int typeOfARPEntry;
-                       // 1 : other. 2:An invalid ARP type. This can indicate an unreachable or incomplete ARP entry. 3:A dynamic ARP type. 4:A static ARP type.
+            [MarshalAs(UnmanagedType.U4)] public int typeOfARPEntry;
+            // 1 : other. 2:An invalid ARP type. This can indicate an unreachable or incomplete ARP entry. 3:A dynamic ARP type. 4:A static ARP type.
         }
 
         #endregion

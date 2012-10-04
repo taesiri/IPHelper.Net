@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCPTable", "Samples\TCPTabl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UDPTable", "Samples\UDPTable\UDPTable.csproj", "{59A76CB6-AECA-4FA1-9B1C-A0916D2BDED7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestField", "Samples\TestField\TestField.csproj", "{F853D038-5849-419E-B52F-EF27B97D3B7D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{59A76CB6-AECA-4FA1-9B1C-A0916D2BDED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59A76CB6-AECA-4FA1-9B1C-A0916D2BDED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59A76CB6-AECA-4FA1-9B1C-A0916D2BDED7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F853D038-5849-419E-B52F-EF27B97D3B7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F853D038-5849-419E-B52F-EF27B97D3B7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F853D038-5849-419E-B52F-EF27B97D3B7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F853D038-5849-419E-B52F-EF27B97D3B7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,7 +13,7 @@ namespace TCPTable
 
         private static void PrintData()
         {
-            var returnData = Functions.GetExtendedTcpTable(true);
+            var returnData = Functions.GetExtendedTcpTable(true,Win32Funcs.TcpTableType.OwnerPidAll);
 
             Console.WriteLine("+================================================================================+");
 

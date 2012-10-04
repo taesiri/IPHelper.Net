@@ -21,7 +21,7 @@ namespace IPHelper
             return result;
         }
 
-        public static TcpTable GetExtendedTcpTable(bool sorted)
+        public static TcpTable GetExtendedTcpTable(bool sorted, Win32Funcs.TcpTableType tabletype)
         {
             var tcpRows = new List<TcpRow>();
 
@@ -29,14 +29,14 @@ namespace IPHelper
             int tcpTableLength = 0;
 
             if (Win32Funcs.GetExtendedTcpTable(tcpTable, ref tcpTableLength, sorted, Win32Funcs.AfInet,
-                                               Win32Funcs.TcpTableType.OwnerPidAll, 0) != 0)
+                                               tabletype, 0) != 0)
             {
                 try
                 {
                     tcpTable = Marshal.AllocHGlobal(tcpTableLength);
                     if (
                         Win32Funcs.GetExtendedTcpTable(tcpTable, ref tcpTableLength, true, Win32Funcs.AfInet,
-                                                       Win32Funcs.TcpTableType.OwnerPidAll, 0) == 0)
+                                                       tabletype, 0) == 0)
                     {
                         var table = (Win32Funcs.TcpTable) Marshal.PtrToStructure(tcpTable, typeof (Win32Funcs.TcpTable));
 
@@ -63,7 +63,7 @@ namespace IPHelper
         }
 
 
-        public static UdpTable GetExtendedUdpTable(bool sorted)
+        public static UdpTable GetExtendedUdpTable(bool sorted, Win32Funcs.UdpTableType tabletype)
         {
             var udpRows = new List<UdpRow>();
 
@@ -72,14 +72,14 @@ namespace IPHelper
 
             if (
                 Win32Funcs.GetExtendedUdpTable(udpTable, ref udpTableLength, sorted, Win32Funcs.AfInet,
-                                               Win32Funcs.UdpTableType.OwnerPid, 0) != 0)
+                                              tabletype, 0) != 0)
             {
                 try
                 {
                     udpTable = Marshal.AllocHGlobal(udpTableLength);
                     if (
                         Win32Funcs.GetExtendedUdpTable(udpTable, ref udpTableLength, true, Win32Funcs.AfInet,
-                                                       Win32Funcs.UdpTableType.OwnerPid, 0) == 0)
+                                                       tabletype, 0) == 0)
                     {
                         var table = (Win32Funcs.UdpTable) Marshal.PtrToStructure(udpTable, typeof (Win32Funcs.UdpTable));
 
@@ -144,6 +144,26 @@ namespace IPHelper
                 }
             }
             return new IPNetTable(ipNetRows);
+        }
+
+        public static UInt32 CreateIpNetEntry(IPNetRow netRow)
+        {
+            //var data = netRow.GetIpNetRowStructure();
+            //var pointer = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Win32Funcs.IpNetRow)));
+            //Console.WriteLine(Marshal.SizeOf(typeof (Win32Funcs.IpNetRow)).ToString());
+            //try
+            //{
+            //    Marshal.StructureToPtr(data, pointer, false);
+                
+            //}
+            //catch (Exception)
+            //{
+            //    //throw new Exception("Operation Failed, Error Code : " + returnValue);
+            //}
+            //Console.WriteLine(pointer.ToString());
+            //var returnValue =  Win32Funcs.CreateIpNetEntry(pointer);
+            //return returnValue;
+            return 0;
         }
 
         #endregion

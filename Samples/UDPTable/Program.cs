@@ -13,7 +13,7 @@ namespace UDPTable
 
         private static void PrintData()
         {
-            UdpTable returnData = Functions.GetExtendedUdpTable(true);
+            UdpTable returnData = Functions.GetExtendedUdpTable(true,Win32Funcs.UdpTableType.OwnerPid);
 
             Console.WriteLine("+============================================+");
 
