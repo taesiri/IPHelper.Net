@@ -15,7 +15,7 @@ namespace IPHelper
 
         public UdpTable(IEnumerable<UdpRow> udpRows)
         {
-            this._udpRows = udpRows;
+            _udpRows = udpRows;
         }
 
         #endregion

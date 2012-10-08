@@ -15,7 +15,7 @@ namespace IPHelper
 
         public IPNetTable(IEnumerable<IPNetRow> tcpRows)
         {
-            this._ipNetRows = tcpRows;
+            _ipNetRows = tcpRows;
         }
 
         #endregion
@@ -24,25 +24,21 @@ namespace IPHelper
 
         public IEnumerable<IPNetRow> Rows
         {
-            get { return this._ipNetRows; }
+            get { return _ipNetRows; }
         }
 
         #endregion
 
-        #region IEnumerable<TcpRow> Members
+        #region IEnumerable<IPNetRow> Members
 
         public IEnumerator<IPNetRow> GetEnumerator()
         {
-            return this._ipNetRows.GetEnumerator();
+            return _ipNetRows.GetEnumerator();
         }
-
-        #endregion
-
-        #region IEnumerable Members
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this._ipNetRows.GetEnumerator();
+            return _ipNetRows.GetEnumerator();
         }
 
         #endregion

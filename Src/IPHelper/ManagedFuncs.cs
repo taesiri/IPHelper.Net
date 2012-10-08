@@ -15,7 +15,9 @@ namespace IPHelper
             IntPtr ptrNTEContext;
             IntPtr ptrNTEInstance;
 
+#pragma warning disable 612,618
             uint result = Win32Funcs.AddIPAddress((uint) ipAddress.Address, (uint) ipAddressMask.Address,
+#pragma warning restore 612,618
                                                   adaptorIndex, out ptrNTEContext, out ptrNTEInstance);
 
             return result;
@@ -72,7 +74,7 @@ namespace IPHelper
 
             if (
                 Win32Funcs.GetExtendedUdpTable(udpTable, ref udpTableLength, sorted, Win32Funcs.AfInet,
-                                              tabletype, 0) != 0)
+                                               tabletype, 0) != 0)
             {
                 try
                 {
@@ -148,13 +150,14 @@ namespace IPHelper
 
         public static UInt32 CreateIpNetEntry(IPNetRow netRow)
         {
+            throw new NotImplementedException("Not yet implemented!");
             //var data = netRow.GetIpNetRowStructure();
             //var pointer = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Win32Funcs.IpNetRow)));
             //Console.WriteLine(Marshal.SizeOf(typeof (Win32Funcs.IpNetRow)).ToString());
             //try
             //{
             //    Marshal.StructureToPtr(data, pointer, false);
-                
+
             //}
             //catch (Exception)
             //{
@@ -163,7 +166,11 @@ namespace IPHelper
             //Console.WriteLine(pointer.ToString());
             //var returnValue =  Win32Funcs.CreateIpNetEntry(pointer);
             //return returnValue;
-            return 0;
+        }
+
+        public static uint GetAdapterIndex(string adaptorName)
+        {
+            throw new NotImplementedException("There are some Difficulties");
         }
 
         #endregion

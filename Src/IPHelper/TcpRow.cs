@@ -61,10 +61,10 @@ namespace IPHelper
 
         public override string ToString()
         {
-            var returnData = "ProcessId : " + ProcessId + 
-                             " " + "Local Address : " + _localEndPoint.ToString() +
-                             " " + "Remote Address : " + _remoteEndPoint.ToString() +
-                             " " + "State : " + State;
+            string returnData = "ProcessId : " + ProcessId +
+                                " " + "Local Address : " + _localEndPoint +
+                                " " + "Remote Address : " + _remoteEndPoint +
+                                " " + "State : " + State;
             return returnData;
         }
 
@@ -89,7 +89,7 @@ namespace IPHelper
 
         public override int GetHashCode()
         {
-            var dummy = this.ToString();
+            string dummy = ToString();
             return dummy.GetHashCode();
         }
     }

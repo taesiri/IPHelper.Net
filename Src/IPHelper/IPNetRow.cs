@@ -9,10 +9,11 @@ namespace IPHelper
         #region Private Fields
 
         private readonly int _adaptorIndex;
-        private readonly PhysicalAddress _entryMacAddress;
         private readonly IPAddress _entryIPAddress;
-        private readonly Win32Funcs.ArpEntryType _typeOfArp;
+        private readonly PhysicalAddress _entryMacAddress;
         private readonly Win32Funcs.IpNetRow _orginalData;
+        private readonly Win32Funcs.ArpEntryType _typeOfArp;
+
         #endregion
 
         #region Constructors
@@ -21,7 +22,7 @@ namespace IPHelper
         {
             // Todo : I Know what i have to do here! :D ;)
             _orginalData = ipNetRow;
-            _adaptorIndex = (int)ipNetRow.adaptorIndex;
+            _adaptorIndex = ipNetRow.adaptorIndex;
             var macaddress = new byte[8]
                                  {
                                      ipNetRow.adaptorPhysicalMacAddress0, ipNetRow.adaptorPhysicalMacAddress1,
@@ -31,10 +32,10 @@ namespace IPHelper
                                  };
             _entryMacAddress = new PhysicalAddress(macaddress);
             _entryIPAddress = new IPAddress(BitConverter.GetBytes(ipNetRow.adaptorAddr));
-            _typeOfArp = (Win32Funcs.ArpEntryType)ipNetRow.typeOfARPEntry;
+            _typeOfArp = (Win32Funcs.ArpEntryType) ipNetRow.typeOfARPEntry;
         }
-        #endregion
 
+        #endregion
 
         #region Public Properties
 
@@ -62,6 +63,7 @@ namespace IPHelper
         {
             return _orginalData;
         }
+
         #endregion
     }
 }

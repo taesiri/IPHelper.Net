@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace IPHelper
 {
@@ -15,12 +16,60 @@ namespace IPHelper
 
         #region Public Methods
 
+        #region Adapter Management
+
+        /// <summary>
+        /// <see cref="http://msdn.microsoft.com/en-us/library/windows/desktop/aa365909(v=vs.85).aspx"/>
+        /// </summary>
+        [DllImport(DllName, SetLastError = true)]
+        public static extern uint GetAdapterIndex([MarshalAs(UnmanagedType.LPWStr)] StringBuilder adapterName,
+                                                  out IntPtr adaptorIndex);
+
+        /// <summary>
+        /// <see cref="http://msdn.microsoft.com/en-us/library/windows/desktop/aa365915(v=vs.85).aspx"/>
+        /// </summary>
+        [DllImport(DllName, SetLastError = true)]
+        public static extern uint GetAdaptersAddresses(int family, int flags, IntPtr reserved,
+                                                       ref IntPtr adapterAddresses, ref int sizePointer);
+
+        /// <summary>
+        /// <see cref="http://msdn.microsoft.com/en-us/library/windows/desktop/aa365917%28v=vs.85%29.aspx"/>
+        /// </summary>
+        [DllImport(DllName, SetLastError = true)]
+        public static extern uint GetAdaptersInfo(ref IntPtr pAdapterInfo, ref uint pOutBufLen);
+
+        /// <summary>
+        /// <see cref="http://msdn.microsoft.com/en-us/library/windows/desktop/aa366012%28v=vs.85%29.aspx"/>
+        /// </summary>
+        [DllImport(DllName, SetLastError = true)]
+        public static extern uint GetPerAdapterInfo(int ifIndex, ref IntPtr pAdapterInfo, ref uint pOutBufLen);
+
+        /// <summary>
+        /// <see cref="http://msdn.microsoft.com/en-us/library/windows/desktop/aa366034%28v=vs.85%29.aspx"/>
+        /// </summary>
+        [DllImport(DllName, SetLastError = true)]
+        public static extern uint GetUniDirectionalAdapterInfo(ref IntPtr pIPIfInfo, ref uint dwOutBufLen);
+
+        #endregion
+
         /// <summary>
         /// <see cref="http://msdn.microsoft.com/en-us/library/windows/desktop/aa365801%28v=vs.85%29.aspx"/>
         /// </summary>
         [DllImport(DllName, SetLastError = true)]
-        public static extern uint AddIPAddress(uint address, uint ipMask, int ifIndex, out IntPtr nteContext, out IntPtr nteInstance);
+        public static extern uint AddIPAddress(uint address, uint ipMask, int ifIndex, out IntPtr nteContext,
+                                               out IntPtr nteInstance);
 
+        /// <summary>
+        /// <see cref="http://msdn.microsoft.com/en-us/library/windows/desktop/aa365866%28v=vs.85%29.aspx"/>
+        /// </summary>
+        [DllImport(DllName, SetLastError = true)]
+        public static extern uint CreateIpNetEntry(IntPtr ipNetRow);
+
+        /// <summary>
+        /// <see cref="http://msdn.microsoft.com/en-us/library/windows/desktop/aa365914(v=vs.85).aspx"/>
+        /// </summary>
+        [DllImport(DllName, SetLastError = true)]
+        public static extern uint GetAdapterOrderMap();
 
         /// <summary>
         /// <see cref="http://msdn2.microsoft.com/en-us/library/aa365928.aspx"/>
@@ -28,7 +77,6 @@ namespace IPHelper
         [DllImport(DllName, SetLastError = true)]
         public static extern uint GetExtendedTcpTable(IntPtr tcpTable, ref int tcpTableLength, bool sort, int ipVersion,
                                                       TcpTableType tcpTableType, int reserved);
-
 
         /// <summary>
         /// <see cref="http://msdn.microsoft.com/en-us/library/aa365930%28v=vs.85%29"/>
@@ -43,12 +91,6 @@ namespace IPHelper
         [DllImport(DllName, SetLastError = true)]
         public static extern uint GetIpNetTable(IntPtr ipNetTable, ref int ipNetTableLength, bool sort);
 
-        /// <summary>
-        /// <see cref="http://msdn.microsoft.com/en-us/library/windows/desktop/aa365866%28v=vs.85%29.aspx"/>
-        /// </summary>
-        [DllImport(DllName, SetLastError = true)]
-        public static extern uint CreateIpNetEntry(IntPtr ipNetRow);
-       
         #endregion
 
         #region Public Enums

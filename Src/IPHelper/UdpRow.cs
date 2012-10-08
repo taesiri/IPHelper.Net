@@ -23,7 +23,7 @@ namespace IPHelper
                 long localAddress = udpRow.localAddr;
                 _localEndPoint = new IPEndPoint(localAddress, localPort);
             }
-            catch (Exception)
+            catch
             {
             }
         }
@@ -41,8 +41,8 @@ namespace IPHelper
 
         public override string ToString()
         {
-            var returnData = "ProcessId : " + ProcessId +
-                             " " + "Local Address : " + _localEndPoint.ToString();
+            string returnData = "ProcessId : " + ProcessId +
+                                " " + "Local Address : " + _localEndPoint;
             return returnData;
         }
 
@@ -67,7 +67,7 @@ namespace IPHelper
 
         public override int GetHashCode()
         {
-            var dummy = this.ToString();
+            string dummy = ToString();
             return dummy.GetHashCode();
         }
     }
